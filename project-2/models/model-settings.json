@@ -1,0 +1,5 @@
+
+{
+    "name": "task-1-classifcation-model",
+    "implementation": "deploy_task_1_cnn.ImgClassificationModel"
+}
