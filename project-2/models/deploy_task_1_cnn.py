@@ -14,7 +14,6 @@ class ImgClassificationModel(MLModel):
         model_h5_file = os.path.join(model_dir, "model_task_1_cnn_classification.h5")
         
         self.model = load_model(model_h5_file)
-        self.model = spacy.load("en_core_web_lg")
 
     
     @decode_args
