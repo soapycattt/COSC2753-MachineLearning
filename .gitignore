@@ -3,7 +3,7 @@
 **/*.jpg
 **/.DS_Store
 **/.ipynb_checkpoints
-
+**/__pycache__
 
 # Data dirs 
 ./Furniture_Data
