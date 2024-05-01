@@ -1,5 +1,11 @@
+# Persisted file
 **/*.csv
 **/*.jpg
 **/.DS_Store
 **/.ipynb_checkpoints
+
+
+# Data dirs 
+./Furniture_Data
+./Transformed_Furniture_Data
 
