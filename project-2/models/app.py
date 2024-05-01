@@ -31,7 +31,6 @@ def _classify(img_path: str) -> str:
     
     return _FURNITURES[predicted_class_index-1]
 
-
 classification_model_name = "model_task_1_cnn_classification.h5"
 classification_model = _load_model(classification_model_name)
 
@@ -40,7 +39,13 @@ def index():
     return {'message': 'Cars Recommender ML API'}
 
 @app.get('/classify')
-def classify(img_path: str) -> dict:
+def classify(img_idx: int) -> dict:
+    # Get relative file path
+    relative_path = "../Custom_Furniture_Data"
+    file_name = f"custom-img-{img_idx}.png"
+    img_path = os.path.join(relative_path, file_name)
+
+    # Predict and return the result
     predicted_furniture = _classify(img_path)
     return {'result': predicted_furniture}
 
