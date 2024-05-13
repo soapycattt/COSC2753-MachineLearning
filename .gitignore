@@ -6,6 +6,7 @@
 **/__pycache__
 
 # Data dirs 
-./Furniture_Data
-./Transformed_Furniture_Data
+project-2/Furniture_Data
+project-2/Transformed_Furniture_Data
+project-2/vectors
 
