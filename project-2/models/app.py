@@ -78,14 +78,17 @@ def classify(img_idx: int) -> dict:
 @app.get("/recommend")
 def recommend(img_idx: int) -> dict:
     img_path = _get_img_path(img_idx)
-    paths, distances = find_similar_images(recommendation_model, encoder, img_path)
+    paths, distances, corr_coeffs = find_similar_images(
+        recommendation_model, encoder, img_path
+    )
 
     # TODO: Extract data from multi-dimension array `distances`
     #  [[27.37364001 28.79204727 29.02428353 29.03651842 29.2367386  29.3095765 29.63712217 29.74092537 29.81967957 29.8546811 ]]
+    distances = list(distances[0])
     print(paths)
     print(distances)
 
-    return {"paths": "haha", "distances": "haha"}
+    return {"paths": paths, "distances": distances, "correlations": corr_coeffs}
 
 
 if __name__ == "__main__":

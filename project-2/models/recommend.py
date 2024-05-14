@@ -3,6 +3,7 @@ import pickle
 import os
 import numpy as np
 import cv2
+import re
 from scipy.stats import pearsonr
 
 furnitures = ["table", "sofa", "lamp", "chair", "dresser", "bed"]
@@ -56,6 +57,17 @@ def get_correlation_coeff(input_path, neighbor_path) -> float:
     return correlation_coefficient
 
 
+def correct_path(filepath: str) -> str:
+    """Replace the image directory, cd back to parent dir, and remove '-' sign after the image number index.
+    E.g.
+        - Before: 'task1-2-furnitures/tables/Asian/29-contemporary-side-tables-and-end-tables.jpg'
+        - After:  '../Furniture_Data/tables/Asian/29contemporary-side-tables-and-end-tables.jpg'
+    """
+
+    filepath = f"../{filepath.replace('task1-2-furnitures', 'Furniture_Data')}"
+    return re.sub(r"(\d)-", r"\1", filepath)
+
+
 # Function to find similar images for a given query image
 def find_similar_images(model, encoder, query_image_path, top_k=10):
     # Preprocess query image
@@ -76,18 +88,15 @@ def find_similar_images(model, encoder, query_image_path, top_k=10):
 
     # Return paths of similar images
     similar_image_paths = [img_paths[idx] for idx in indices[0]]
-    print(similar_image_paths)
-    # Adhocly replace img path
-    similar_image_paths = [
-        f"../{path.replace('task1-2-furnitures', 'Furniture_Data')}"
-        for path in similar_image_paths
-    ]
+
+    # Adhocly correct img path for Triet's device
+    similar_image_paths = [correct_path(path) for path in similar_image_paths]
     print(similar_image_paths)
 
     # Get correlation scores
-    # correlation_coeffs = [
-    #     get_correlation_coeff(query_image_path, neighbor_path)
-    #     for neighbor_path in similar_image_paths
-    # ]
+    corr_coeffs = [
+        get_correlation_coeff(query_image_path, neighbor_path)
+        for neighbor_path in similar_image_paths
+    ]
 
-    return similar_image_paths, distances
+    return similar_image_paths, distances, corr_coeffs
